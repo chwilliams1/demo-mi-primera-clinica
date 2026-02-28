@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mi Primera Clínica — Centro de Salud Integral Infantil | La Serena</title>
+  <meta name="description" content="Centro de salud integral para niños en La Serena. Odontopediatría, ortodoncia, pediatría y fonoaudiología. Huanhualí 899.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #0F2137;
+      --navy-light: #1A3352;
+      --teal: #0EA5A0;
+      --teal-dark: #0B8683;
+      --teal-light: #14C9C3;
+      --mint: #E6FAF9;
+      --coral: #F47458;
+      --coral-soft: #FF9A85;
+      --gold: #F5B731;
+      --cream: #FFFDF7;
+      --warm: #FFF8F0;
+      --sky: #EEF6FC;
+      --slate: #5A6B7F;
+      --gray-light: #F3F5F8;
+      --white: #FFFFFF;
+      --shadow-sm: 0 2px 8px rgba(15,33,55,0.06);
+      --shadow-md: 0 8px 30px rgba(15,33,55,0.08);
+      --shadow-lg: 0 20px 60px rgba(15,33,55,0.12);
+      --shadow-xl: 0 30px 80px rgba(15,33,55,0.15);
+      --font-heading: 'Playfair Display', Georgia, serif;
+      --font-body: 'Outfit', -apple-system, sans-serif;
+      --radius-sm: 12px;
+      --radius-md: 20px;
+      --radius-lg: 28px;
+      --radius-xl: 40px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      color: var(--navy);
+      background: var(--cream);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.6;
+    }
+
+    /* === Utility === */
+    .container { max-width: 1220px; margin: 0 auto; padding: 0 28px; }
+
+    /* === Animations === */
+    @keyframes fadeUp { from { opacity:0; transform:translateY(36px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+    @keyframes float { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-10px); } }
+    @keyframes shimmer { 0% { background-position:-200% 0; } 100% { background-position:200% 0; } }
+    @keyframes scaleIn { from { opacity:0; transform:scale(0.92); } to { opacity:1; transform:scale(1); } }
+
+    .reveal { opacity:0; transform:translateY(30px); transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1); }
+    .reveal.visible { opacity:1; transform:translateY(0); }
+    .reveal-d1 { transition-delay: 0.1s; }
+    .reveal-d2 { transition-delay: 0.2s; }
+    .reveal-d3 { transition-delay: 0.3s; }
+
+    /* === Navigation === */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      background: rgba(255,253,247,0.88);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(15,33,55,0.04);
+      transition: all 0.4s ease;
+    }
+    nav.scrolled { background: rgba(255,253,247,0.96); box-shadow: var(--shadow-sm); }
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      height: 76px; max-width: 1220px; margin: 0 auto; padding: 0 28px;
+    }
+    .nav-brand { display: flex; align-items: center; gap: 14px; text-decoration: none; }
+    .nav-brand img { height: 48px; width: auto; }
+    .nav-logo-icon { font-size: 1.6rem; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; background: var(--mint); border-radius: 12px; }
+    .nav-brand-text { font-family: var(--font-body); font-weight: 700; font-size: 1.1rem; color: var(--navy); line-height: 1.2; }
+
+    /* Placeholder images */
+    .ph {
+      width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
+      flex-direction: column; gap: 8px; font-size: 2.5rem;
+      color: rgba(15,33,55,0.15); position: relative;
+    }
+    .ph span { font-size: 0.78rem; font-weight: 600; color: rgba(15,33,55,0.3); letter-spacing: 0.02em; }
+    .ph-teal { background: linear-gradient(135deg, #e6faf9 0%, #d0f3f1 100%); }
+    .ph-warm { background: linear-gradient(135deg, #fff8f0 0%, #ffe8d8 100%); }
+    .ph-sky { background: linear-gradient(135deg, #eef6fc 0%, #d8ecfa 100%); }
+    .ph-navy { background: linear-gradient(135deg, #1a3352 0%, #0f2137 100%); color: rgba(255,255,255,0.2); }
+    .ph-navy span { color: rgba(255,255,255,0.35); }
+    .nav-brand-text span { color: var(--teal); display: block; font-size: 0.72rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; }
+
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links a {
+      text-decoration: none; color: var(--slate); font-size: 0.88rem; font-weight: 500;
+      transition: color 0.3s; position: relative; padding-bottom: 4px;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px;
+      background: var(--teal); border-radius: 1px; transition: width 0.3s ease;
+    }
+    .nav-links a:hover { color: var(--teal); }
+    .nav-links a:hover::after { width: 100%; }
+
+    .nav-cta {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--teal); color: var(--white); padding: 11px 26px;
+      border-radius: 100px; text-decoration: none; font-weight: 600;
+      font-size: 0.88rem; transition: all 0.3s;
+      box-shadow: 0 4px 14px rgba(14,165,160,0.25);
+    }
+    .nav-cta:hover { background: var(--teal-dark); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(14,165,160,0.3); }
+
+    .nav-mobile { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
+    .nav-mobile svg { display: block; }
+
+    /* === Hero === */
+    .hero {
+      padding: 130px 0 90px;
+      background: linear-gradient(175deg, var(--cream) 0%, var(--mint) 40%, var(--warm) 100%);
+      position: relative; overflow: hidden;
+    }
+    .hero-bg-orb {
+      position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.4;
+    }
+    .hero-bg-orb.o1 { width: 500px; height: 500px; background: var(--teal-light); top: -120px; right: -80px; }
+    .hero-bg-orb.o2 { width: 350px; height: 350px; background: var(--coral-soft); bottom: -80px; left: -60px; opacity: 0.25; }
+
+    .hero-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 60px;
+      align-items: center; position: relative; z-index: 1;
+    }
+
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--white); border: 1px solid rgba(14,165,160,0.15);
+      padding: 7px 18px 7px 10px; border-radius: 100px;
+      font-size: 0.8rem; font-weight: 600; color: var(--teal-dark);
+      margin-bottom: 24px; box-shadow: var(--shadow-sm);
+    }
+    .hero-tag-dot {
+      width: 22px; height: 22px; border-radius: 50%; background: var(--mint);
+      display: flex; align-items: center; justify-content: center; font-size: 0.7rem;
+    }
+
+    .hero h1 {
+      font-family: var(--font-heading); font-size: clamp(2.6rem, 5vw, 3.8rem);
+      line-height: 1.1; color: var(--navy); margin-bottom: 24px;
+      font-weight: 700; letter-spacing: -0.02em;
+    }
+    .hero h1 .accent {
+      color: var(--teal); position: relative; font-style: italic;
+    }
+    .hero h1 .accent::after {
+      content: ''; position: absolute; bottom: 4px; left: -2px; right: -2px;
+      height: 10px; background: rgba(14,165,160,0.12); border-radius: 4px; z-index: -1;
+    }
+
+    .hero-desc {
+      font-size: 1.1rem; color: var(--slate); line-height: 1.75;
+      max-width: 500px; margin-bottom: 36px;
+    }
+
+    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 48px; }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: var(--teal); color: var(--white); padding: 16px 34px;
+      border-radius: 100px; text-decoration: none; font-weight: 700;
+      font-size: 0.95rem; transition: all 0.35s; border: none; cursor: pointer;
+      box-shadow: 0 6px 24px rgba(14,165,160,0.3);
+    }
+    .btn-primary:hover { background: var(--teal-dark); transform: translateY(-2px); box-shadow: 0 8px 32px rgba(14,165,160,0.35); }
+    .btn-outline {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: var(--white); color: var(--navy); padding: 16px 34px;
+      border-radius: 100px; text-decoration: none; font-weight: 600;
+      font-size: 0.95rem; transition: all 0.35s; border: 2px solid rgba(15,33,55,0.1);
+    }
+    .btn-outline:hover { border-color: var(--teal); color: var(--teal); transform: translateY(-2px); }
+
+    .hero-trust {
+      display: flex; gap: 44px;
+    }
+    .hero-trust-item strong {
+      display: block; font-family: var(--font-heading); font-size: 1.8rem;
+      color: var(--teal); font-weight: 700;
+    }
+    .hero-trust-item span { font-size: 0.8rem; color: var(--slate); font-weight: 500; }
+
+    .hero-visual { position: relative; }
+    .hero-img-wrapper {
+      position: relative; border-radius: var(--radius-lg); overflow: hidden;
+      box-shadow: var(--shadow-xl); aspect-ratio: 3/4;
+    }
+    .hero-img-wrapper img { width: 100%; height: 100%; object-fit: cover; }
+
+    .hero-card {
+      position: absolute; background: var(--white); border-radius: var(--radius-md);
+      padding: 18px 22px; box-shadow: var(--shadow-lg);
+      display: flex; align-items: center; gap: 14px;
+      animation: float 5s ease-in-out infinite;
+    }
+    .hero-card.hc-1 { bottom: 40px; left: -30px; animation-delay: 0s; }
+    .hero-card.hc-2 { top: 30px; right: -20px; animation-delay: 2s; }
+    .hc-icon {
+      width: 48px; height: 48px; border-radius: 14px; display: flex;
+      align-items: center; justify-content: center; font-size: 1.4rem; flex-shrink: 0;
+    }
+    .hc-icon.teal { background: var(--mint); }
+    .hc-icon.coral { background: var(--warm); }
+    .hc-text strong { display: block; font-size: 0.88rem; font-weight: 700; }
+    .hc-text span { font-size: 0.76rem; color: var(--slate); }
+
+    /* === Trust Bar === */
+    .trust-bar {
+      padding: 32px 0; background: var(--white);
+      border-bottom: 1px solid rgba(15,33,55,0.04);
+    }
+    .trust-items { display: flex; align-items: center; justify-content: center; gap: 56px; flex-wrap: wrap; }
+    .trust-item {
+      display: flex; align-items: center; gap: 12px;
+      font-size: 0.88rem; font-weight: 500; color: var(--slate);
+    }
+    .trust-icon {
+      width: 42px; height: 42px; border-radius: 12px; display: flex;
+      align-items: center; justify-content: center; font-size: 1.15rem;
+      background: var(--gray-light);
+    }
+
+    /* === Sections === */
+    section { padding: 110px 0; }
+    .section-eyebrow {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 0.76rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.12em; color: var(--teal); margin-bottom: 14px;
+    }
+    .section-eyebrow::before {
+      content: ''; width: 28px; height: 2.5px; background: var(--coral); border-radius: 2px;
+    }
+    .section-title {
+      font-family: var(--font-heading); font-size: clamp(1.9rem, 3.2vw, 2.7rem);
+      color: var(--navy); margin-bottom: 16px; line-height: 1.18;
+      font-weight: 700; letter-spacing: -0.015em;
+    }
+    .section-desc {
+      font-size: 1.05rem; color: var(--slate); line-height: 1.7; max-width: 580px;
+    }
+
+    /* === About === */
+    .about { background: var(--white); }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+    .about-visual { position: relative; }
+    .about-img-main {
+      width: 100%; border-radius: var(--radius-lg); overflow: hidden;
+      box-shadow: var(--shadow-lg); aspect-ratio: 4/3;
+    }
+    .about-img-main img { width: 100%; height: 100%; object-fit: cover; }
+    .about-img-small {
+      position: absolute; bottom: -24px; right: -24px; width: 200px; height: 200px;
+      border-radius: var(--radius-md); overflow: hidden; border: 5px solid var(--white);
+      box-shadow: var(--shadow-md);
+    }
+    .about-img-small img { width: 100%; height: 100%; object-fit: cover; }
+
+    .about-features { margin-top: 36px; display: flex; flex-direction: column; gap: 18px; }
+    .about-feat {
+      display: flex; gap: 16px; padding: 18px; border-radius: var(--radius-sm);
+      transition: all 0.35s; cursor: default;
+    }
+    .about-feat:hover { background: var(--mint); }
+    .about-feat-icon {
+      width: 50px; height: 50px; border-radius: 14px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem;
+      background: linear-gradient(135deg, var(--teal), var(--teal-light));
+      color: var(--white);
+    }
+    .about-feat h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 3px; }
+    .about-feat p { font-size: 0.86rem; color: var(--slate); line-height: 1.55; }
+
+    /* === Services === */
+    .services { background: var(--cream); position: relative; }
+    .services-header { text-align: center; margin-bottom: 64px; }
+    .services-header .section-desc { margin: 0 auto; }
+    .services-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; }
+    .service-card {
+      background: var(--white); border-radius: var(--radius-md); padding: 32px 26px;
+      transition: all 0.4s cubic-bezier(0.16,1,0.3,1); position: relative;
+      border: 1px solid rgba(15,33,55,0.04); overflow: hidden;
+    }
+    .service-card::after {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--teal), var(--coral-soft));
+      opacity: 0; transition: opacity 0.4s;
+    }
+    .service-card:hover {
+      transform: translateY(-8px); box-shadow: var(--shadow-lg);
+      border-color: transparent;
+    }
+    .service-card:hover::after { opacity: 1; }
+    .service-icon-wrap {
+      width: 58px; height: 58px; border-radius: 16px; display: flex;
+      align-items: center; justify-content: center; font-size: 1.5rem;
+      margin-bottom: 20px;
+    }
+    .sic-teal { background: var(--mint); }
+    .sic-coral { background: rgba(244,116,88,0.08); }
+    .sic-gold { background: rgba(245,183,49,0.1); }
+    .sic-navy { background: var(--sky); }
+    .service-card h3 {
+      font-family: var(--font-heading); font-size: 1.08rem; margin-bottom: 8px;
+      font-weight: 700; line-height: 1.3;
+    }
+    .service-card p { font-size: 0.84rem; color: var(--slate); line-height: 1.6; }
+
+    /* === Team === */
+    .team { background: var(--white); }
+    .team-header { text-align: center; margin-bottom: 64px; }
+    .team-header .section-desc { margin: 0 auto; }
+
+    .team-main { display: grid; grid-template-columns: repeat(3, 1fr); gap: 36px; margin-bottom: 50px; }
+    .team-secondary { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; }
+
+    .team-card { text-align: center; }
+    .team-photo {
+      width: 100%; aspect-ratio: 1; border-radius: 50%; overflow: hidden;
+      margin: 0 auto 18px; box-shadow: var(--shadow-md);
+      transition: all 0.4s; position: relative; max-width: 220px;
+      border: 4px solid var(--white); outline: 3px solid rgba(14,165,160,0.12);
+    }
+    .team-card:hover .team-photo {
+      transform: scale(1.04); outline-color: var(--teal);
+      box-shadow: var(--shadow-lg);
+    }
+    .team-photo img {
+      width: 100%; height: 100%; object-fit: cover;
+      border-radius: 50%;
+    }
+    .team-card h3 { font-family: var(--font-heading); font-size: 1.1rem; font-weight: 700; margin-bottom: 4px; }
+    .team-card .team-role { font-size: 0.82rem; color: var(--teal); font-weight: 600; margin-bottom: 6px; }
+    .team-card .team-desc { font-size: 0.8rem; color: var(--slate); line-height: 1.5; max-width: 260px; margin: 0 auto; }
+
+    .team-secondary .team-photo { max-width: 160px; }
+    .team-secondary .team-card h3 { font-size: 1rem; }
+    .team-secondary .team-card .team-role { font-size: 0.78rem; }
+
+    /* === Facility === */
+    .facility { background: var(--cream); }
+    .facility-header { text-align: center; margin-bottom: 60px; }
+    .facility-grid {
+      display: grid; grid-template-columns: 2fr 1fr 1fr; grid-template-rows: auto auto;
+      gap: 16px;
+    }
+    .facility-item {
+      border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-md);
+      transition: all 0.4s; position: relative;
+    }
+    .facility-item:hover { transform: scale(1.02); box-shadow: var(--shadow-lg); }
+    .facility-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .facility-item.big { grid-row: span 2; border-radius: var(--radius-lg); }
+    .facility-item.big img { aspect-ratio: 3/4; }
+    .facility-item:not(.big) img { aspect-ratio: 4/3; }
+    .facility-label {
+      position: absolute; bottom: 12px; left: 12px;
+      background: rgba(15,33,55,0.7); backdrop-filter: blur(8px);
+      color: white; padding: 6px 14px; border-radius: 100px;
+      font-size: 0.76rem; font-weight: 600;
+    }
+
+    /* === Testimonials === */
+    .testimonials {
+      background: linear-gradient(165deg, var(--navy) 0%, var(--navy-light) 100%);
+      color: var(--white); position: relative; overflow: hidden;
+    }
+    .testimonials .section-eyebrow { color: var(--coral-soft); }
+    .testimonials .section-eyebrow::before { background: var(--coral-soft); }
+    .testimonials .section-title { color: var(--white); }
+    .testimonials-header { text-align: center; margin-bottom: 60px; }
+    .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .test-card {
+      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius-md); padding: 32px 28px; transition: all 0.35s;
+      backdrop-filter: blur(8px);
+    }
+    .test-card:hover { background: rgba(255,255,255,0.1); transform: translateY(-4px); }
+    .test-stars { color: var(--gold); font-size: 0.95rem; letter-spacing: 3px; margin-bottom: 18px; }
+    .test-text {
+      font-size: 0.92rem; line-height: 1.75; color: rgba(255,255,255,0.85);
+      margin-bottom: 24px; font-style: italic;
+    }
+    .test-author { display: flex; align-items: center; gap: 14px; }
+    .test-avatar {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: rgba(255,255,255,0.1); display: flex;
+      align-items: center; justify-content: center;
+      font-weight: 700; font-size: 0.85rem; color: var(--coral-soft);
+    }
+    .test-name { font-weight: 700; font-size: 0.88rem; }
+    .test-detail { font-size: 0.76rem; color: rgba(255,255,255,0.5); }
+
+    /* === Location === */
+    .location { background: var(--white); }
+    .location-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 64px; align-items: center; }
+    .location-map {
+      width: 100%; aspect-ratio: 4/3; border-radius: var(--radius-lg);
+      overflow: hidden; box-shadow: var(--shadow-lg);
+    }
+    .location-map iframe { width: 100%; height: 100%; border: 0; }
+    .location-details { margin-top: 32px; }
+    .loc-item {
+      display: flex; gap: 16px; margin-bottom: 24px; align-items: flex-start;
+    }
+    .loc-icon {
+      width: 46px; height: 46px; border-radius: 13px; flex-shrink: 0;
+      background: var(--mint); display: flex; align-items: center;
+      justify-content: center; font-size: 1.15rem;
+    }
+    .loc-item h4 { font-size: 0.92rem; font-weight: 700; margin-bottom: 3px; }
+    .loc-item p { font-size: 0.86rem; color: var(--slate); line-height: 1.5; }
+    .loc-item a { color: var(--teal); text-decoration: none; font-weight: 600; }
+    .loc-item a:hover { text-decoration: underline; }
+
+    /* === CTA === */
+    .cta {
+      padding: 90px 0;
+      background: linear-gradient(135deg, var(--mint) 0%, var(--warm) 50%, var(--sky) 100%);
+    }
+    .cta-inner { text-align: center; max-width: 640px; margin: 0 auto; }
+    .cta-inner h2 {
+      font-family: var(--font-heading); font-size: clamp(1.8rem, 3vw, 2.5rem);
+      margin-bottom: 16px; color: var(--navy);
+    }
+    .cta-inner p { font-size: 1.05rem; color: var(--slate); margin-bottom: 36px; line-height: 1.7; }
+    .cta-buttons { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; }
+    .btn-whatsapp {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: #25D366; color: var(--white); padding: 16px 34px;
+      border-radius: 100px; text-decoration: none; font-weight: 700;
+      font-size: 0.95rem; transition: all 0.3s; border: none; cursor: pointer;
+      box-shadow: 0 6px 20px rgba(37,211,102,0.3);
+    }
+    .btn-whatsapp:hover { background: #1fbd5a; transform: translateY(-2px); }
+
+    /* === Footer === */
+    footer {
+      background: var(--navy); color: rgba(255,255,255,0.65); padding: 70px 0 30px;
+    }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
+    .footer-brand p { font-size: 0.86rem; line-height: 1.65; max-width: 300px; margin-top: 14px; }
+    .footer-logo-text {
+      font-family: var(--font-heading); font-size: 1.4rem; font-weight: 700;
+      color: var(--white);
+    }
+    .footer-logo-text span { color: var(--teal-light); }
+    .footer-social { display: flex; gap: 10px; margin-top: 20px; }
+    .footer-social a {
+      width: 40px; height: 40px; border-radius: 12px;
+      background: rgba(255,255,255,0.06); display: flex;
+      align-items: center; justify-content: center;
+      color: rgba(255,255,255,0.5); text-decoration: none;
+      transition: all 0.3s; font-size: 1rem;
+    }
+    .footer-social a:hover { background: var(--teal); color: var(--white); }
+    .footer-col h4 {
+      color: var(--white); font-size: 0.82rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 18px;
+    }
+    .footer-col ul { list-style: none; }
+    .footer-col li { margin-bottom: 10px; }
+    .footer-col a {
+      color: rgba(255,255,255,0.5); text-decoration: none;
+      font-size: 0.88rem; transition: color 0.2s;
+    }
+    .footer-col a:hover { color: var(--teal-light); }
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding-top: 24px; text-align: center; font-size: 0.78rem;
+    }
+
+    /* === Responsive === */
+    @media (max-width: 1024px) {
+      .hero-grid { grid-template-columns: 1fr; gap: 48px; }
+      .hero-visual { order: -1; max-width: 420px; margin: 0 auto; }
+      .hero-card.hc-1 { left: 0; bottom: 20px; }
+      .hero-card.hc-2 { right: 0; top: 20px; }
+      .about-grid { grid-template-columns: 1fr; gap: 48px; }
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
+      .team-main { grid-template-columns: repeat(3, 1fr); gap: 24px; }
+      .team-secondary { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+      .testimonials-grid { grid-template-columns: 1fr; max-width: 520px; margin: 0 auto; }
+      .location-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .nav-links { display: none; }
+      .nav-mobile { display: block; }
+    }
+    @media (max-width: 640px) {
+      .services-grid { grid-template-columns: 1fr; }
+      .team-main { grid-template-columns: 1fr 1fr; }
+      .team-secondary { grid-template-columns: 1fr 1fr; }
+      .hero-trust { gap: 28px; flex-wrap: wrap; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .facility-showcase { grid-template-columns: 1fr; }
+      .facility-grid { grid-template-columns: 1fr 1fr; }
+      .facility-item.big { grid-row: span 1; }
+      .facility-item.big img { aspect-ratio: 16/10; }
+      .trust-items { gap: 20px; }
+    }
+
+    /* === Mobile Menu === */
+    .mobile-menu {
+      display: none; position: fixed; top: 76px; left: 0; right: 0; bottom: 0;
+      background: rgba(255,253,247,0.98); backdrop-filter: blur(20px);
+      z-index: 999; padding: 32px 28px;
+    }
+    .mobile-menu.open { display: flex; flex-direction: column; gap: 8px; }
+    .mobile-menu a {
+      display: block; padding: 14px 0; font-size: 1.1rem; font-weight: 600;
+      color: var(--navy); text-decoration: none; border-bottom: 1px solid rgba(15,33,55,0.06);
+    }
+    .mobile-menu a:hover { color: var(--teal); }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="#" class="nav-brand">
+        <div class="nav-logo-icon">🦷</div>
+        <div class="nav-brand-text">Mi Primera Clínica <span>Centro Infanto-Juvenil</span></div>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#inicio">Inicio</a></li>
+        <li><a href="#nosotros">Nosotros</a></li>
+        <li><a href="#servicios">Especialidades</a></li>
+        <li><a href="#equipo">Equipo</a></li>
+        <li><a href="#ubicacion">Ubicación</a></li>
+      </ul>
+      <a href="https://wa.me/56964721463?text=Hola%2C%20quiero%20agendar%20una%20hora" class="nav-cta">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        Agendar Hora
+      </a>
+      <button class="nav-mobile" id="menuBtn" aria-label="Menu">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </nav>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#inicio">Inicio</a>
+    <a href="#nosotros">Nosotros</a>
+    <a href="#servicios">Especialidades</a>
+    <a href="#equipo">Equipo</a>
+    <a href="#ubicacion">Ubicación</a>
+    <a href="https://wa.me/56964721463?text=Hola%2C%20quiero%20agendar%20una%20hora">Agendar Hora</a>
+  </div>
+
+  <!-- Hero -->
+  <section class="hero" id="inicio">
+    <div class="hero-bg-orb o1"></div>
+    <div class="hero-bg-orb o2"></div>
+    <div class="container">
+      <div class="hero-grid">
+        <div>
+          <div class="hero-tag reveal">
+            <span class="hero-tag-dot">🏥</span>
+            Centro de Salud Integral Infantil — La Serena
+          </div>
+          <h1 class="reveal reveal-d1">La primera visita al dentista puede ser una <span class="accent">gran aventura</span></h1>
+          <p class="hero-desc reveal reveal-d2">Somos un equipo multidisciplinario de especialistas dedicados a la salud integral de tus hijos, desde recién nacidos hasta la adolescencia. Un espacio cálido, seguro y profesional en La Serena.</p>
+          <div class="hero-actions reveal reveal-d2">
+            <a href="https://wa.me/56964721463?text=Hola%2C%20quiero%20agendar%20una%20hora%20para%20mi%20hijo" class="btn-primary">
+              Agendar Primera Consulta
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            <a href="#nosotros" class="btn-outline">Conocer Más</a>
+          </div>
+          <div class="hero-trust reveal reveal-d3">
+            <div class="hero-trust-item">
+              <strong>+7</strong>
+              <span>Profesionales</span>
+            </div>
+            <div class="hero-trust-item">
+              <strong>4</strong>
+              <span>Especialidades</span>
+            </div>
+            <div class="hero-trust-item">
+              <strong>5.0 ⭐</strong>
+              <span>Google Reviews</span>
+            </div>
+          </div>
+        </div>
+        <div class="hero-visual reveal reveal-d1">
+          <div class="hero-img-wrapper">
+            <div class="ph ph-teal">🏥<span>Foto fachada clínica</span></div>
+          </div>
+          <div class="hero-card hc-1">
+            <div class="hc-icon teal">😊</div>
+            <div class="hc-text">
+              <strong>Sin miedo al dentista</strong>
+              <span>Ambiente pensado para niños</span>
+            </div>
+          </div>
+          <div class="hero-card hc-2">
+            <div class="hc-icon coral">🩺</div>
+            <div class="hc-text">
+              <strong>Atención integral</strong>
+              <span>Múltiples especialidades</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Trust Bar -->
+  <div class="trust-bar">
+    <div class="container">
+      <div class="trust-items">
+        <div class="trust-item"><div class="trust-icon">🛡️</div><span>Profesionales Certificados</span></div>
+        <div class="trust-item"><div class="trust-icon">🧸</div><span>Ambiente Infantil Seguro</span></div>
+        <div class="trust-item"><div class="trust-icon">⏰</div><span>Horarios Flexibles</span></div>
+        <div class="trust-item"><div class="trust-icon">🏠</div><span>Huanhualí 899, La Serena</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- About -->
+  <section class="about" id="nosotros">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-visual reveal">
+          <div class="about-img-main">
+            <div class="ph ph-warm">🦸<span>Foto equipo profesional</span></div>
+          </div>
+          <div class="about-img-small">
+            <div class="ph ph-navy">🌙<span>Clínica</span></div>
+          </div>
+        </div>
+        <div>
+          <div class="section-eyebrow reveal">Quiénes Somos</div>
+          <h2 class="section-title reveal">Un espacio creado con amor por la salud infantil</h2>
+          <p class="section-desc reveal">Mi Primera Clínica nace del amor por la salud infantil y el deseo de acompañar a las familias desde el comienzo. Creamos un espacio profesional, cálido y accesible para brindar atención integral a niños y niñas, desde recién nacidos hasta la adolescencia.</p>
+          <div class="about-features">
+            <div class="about-feat reveal">
+              <div class="about-feat-icon">🦷</div>
+              <div>
+                <h4>Atención Multidisciplinaria</h4>
+                <p>Odontopediatría, ortodoncia, pediatría y fonoaudiología bajo un mismo techo. Un cuidado verdaderamente integral.</p>
+              </div>
+            </div>
+            <div class="about-feat reveal">
+              <div class="about-feat-icon">💛</div>
+              <div>
+                <h4>Ética, Empatía y Compromiso</h4>
+                <p>Nuestra misión es acompañar el crecimiento de sus hijos de forma ética, empática y comprometida con su bienestar.</p>
+              </div>
+            </div>
+            <div class="about-feat reveal">
+              <div class="about-feat-icon">🎨</div>
+              <div>
+                <h4>Diseñado para Niños</h4>
+                <p>Cada rincón está pensado para que tu hijo se sienta cómodo y seguro, con un ambiente divertido y acogedor.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section class="services" id="servicios">
+    <div class="container">
+      <div class="services-header">
+        <div class="section-eyebrow reveal">Nuestras Especialidades</div>
+        <h2 class="section-title reveal">Cuidado integral para cada etapa</h2>
+        <p class="section-desc reveal">Cubrimos todas las necesidades de salud de tus hijos con profesionales especializados en cada área.</p>
+      </div>
+      <div class="services-grid">
+        <div class="service-card reveal">
+          <div class="service-icon-wrap sic-teal">🦷</div>
+          <h3>Odontopediatría</h3>
+          <p>¡Los primeros dientes también cuentan! Prevenimos caries, guiamos buenos hábitos y cuidamos sonrisas desde la infancia, con un enfoque divertido y respetuoso.</p>
+        </div>
+        <div class="service-card reveal">
+          <div class="service-icon-wrap sic-coral">🗣️</div>
+          <h3>Fonoaudiología</h3>
+          <p>Ayudamos a mejorar funciones como la respiración, el habla y la alimentación. Todo con juegos, ejercicios y mucha dedicación para que cada niño se desarrolle con confianza.</p>
+        </div>
+        <div class="service-card reveal">
+          <div class="service-icon-wrap sic-navy">😁</div>
+          <h3>Ortodoncia</h3>
+          <p>Guiamos el desarrollo de maxilares y dientes desde edades tempranas, previniendo y corrigiendo alteraciones con tratamientos personalizados para una sonrisa armónica.</p>
+        </div>
+        <div class="service-card reveal">
+          <div class="service-icon-wrap sic-gold">👶</div>
+          <h3>Pediatría</h3>
+          <p>Cuidamos la salud general y broncopulmonar de tu hijo con una mirada cercana, actualizada y centrada en su bienestar desde el nacimiento hasta la adolescencia.</p>
+        </div>
+      </div>
+
+      <!-- Other services -->
+      <div style="margin-top:48px; text-align:center;" class="reveal">
+        <p style="font-size:0.92rem; color:var(--slate); margin-bottom:20px; font-weight:500;">También ofrecemos:</p>
+        <div style="display:flex; justify-content:center; gap:12px; flex-wrap:wrap;">
+          <span style="background:var(--white); padding:10px 20px; border-radius:100px; font-size:0.84rem; font-weight:600; color:var(--navy); box-shadow:var(--shadow-sm); border:1px solid rgba(15,33,55,0.05);">🤱 Asesoría de Lactancia</span>
+          <span style="background:var(--white); padding:10px 20px; border-radius:100px; font-size:0.84rem; font-weight:600; color:var(--navy); box-shadow:var(--shadow-sm); border:1px solid rgba(15,33,55,0.05);">🔧 Ortodoncia Interceptiva</span>
+          <span style="background:var(--white); padding:10px 20px; border-radius:100px; font-size:0.84rem; font-weight:600; color:var(--navy); box-shadow:var(--shadow-sm); border:1px solid rgba(15,33,55,0.05);">✂️ Cirugía de Tejidos Blandos</span>
+          <span style="background:var(--white); padding:10px 20px; border-radius:100px; font-size:0.84rem; font-weight:600; color:var(--navy); box-shadow:var(--shadow-sm); border:1px solid rgba(15,33,55,0.05);">🔬 Frenectomías y Ulectomías</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team -->
+  <section class="team" id="equipo">
+    <div class="container">
+      <div class="team-header">
+        <div class="section-eyebrow reveal">Nuestro SuperEquipo</div>
+        <h2 class="section-title reveal">Profesionales apasionados por el cuidado infantil</h2>
+        <p class="section-desc reveal">Cada miembro de nuestro equipo fue seleccionado por su experiencia, empatía y dedicación al bienestar de los niños.</p>
+      </div>
+
+      <!-- Main team - 3 dentists -->
+      <div class="team-main">
+        <div class="team-card reveal">
+          <div class="team-photo">
+            <div class="ph ph-teal" style="font-size:2rem;">MA<span></span></div>
+          </div>
+          <h3>Dr. Mario Arancibia</h3>
+          <p class="team-role">Cirujano Dentista · Especialista en Odontopediatría</p>
+        </div>
+        <div class="team-card reveal">
+          <div class="team-photo">
+            <div class="ph ph-warm" style="font-size:2rem;">PA<span></span></div>
+          </div>
+          <h3>Dra. Paula Araos</h3>
+          <p class="team-role">Cirujano Dentista · Cursando Especialidad en Odontopediatría</p>
+        </div>
+        <div class="team-card reveal">
+          <div class="team-photo">
+            <div class="ph ph-sky" style="font-size:2rem;">RM<span></span></div>
+          </div>
+          <h3>Dr. Rodrigo Marinado</h3>
+          <p class="team-role">Cirujano Dentista · Especialista en Ortodoncia</p>
+        </div>
+      </div>
+
+      <!-- Secondary team -->
+      <div class="team-secondary">
+        <div class="team-card reveal">
+          <div class="team-photo">
+            <div class="ph ph-warm" style="font-size:1.6rem;">PC<span></span></div>
+          </div>
+          <h3>Dra. Paulina Corco</h3>
+          <p class="team-role">Médico Pediatra · Esp. Broncopulmonar</p>
+        </div>
+        <div class="team-card reveal">
+          <div class="team-photo">
+            <div class="ph ph-teal" style="font-size:1.6rem;">KL<span></span></div>
+          </div>
+          <h3>Karla López</h3>
+          <p class="team-role">Fonoaudióloga · Asesora de Lactancia</p>
+        </div>
+        <div class="team-card reveal">
+          <div class="team-photo">
+            <div class="ph ph-sky" style="font-size:1.6rem;">CE<span></span></div>
+          </div>
+          <h3>Camila Espinosa</h3>
+          <p class="team-role">Fonoaudióloga · Motricidad Orofacial</p>
+        </div>
+        <div class="team-card reveal">
+          <div class="team-photo">
+            <div class="ph ph-warm" style="font-size:1.6rem;">CQ<span></span></div>
+          </div>
+          <h3>Camila Quintana</h3>
+          <p class="team-role">Técnico en Odontología</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="testimonials">
+    <div class="container">
+      <div class="testimonials-header">
+        <div class="section-eyebrow reveal">Testimonios</div>
+        <h2 class="section-title reveal">Lo que dicen los padres</h2>
+      </div>
+      <div class="testimonials-grid">
+        <div class="test-card reveal">
+          <div class="test-stars">★★★★★</div>
+          <p class="test-text">"Mi hija tenía mucho miedo al dentista, pero desde la primera visita se sintió cómoda. El equipo tiene una paciencia increíble. Ahora ella misma pide ir a la clínica."</p>
+          <div class="test-author">
+            <div class="test-avatar">MP</div>
+            <div><div class="test-name">María P.</div><div class="test-detail">Mamá de Sofía, 5 años</div></div>
+          </div>
+        </div>
+        <div class="test-card reveal">
+          <div class="test-stars">★★★★★</div>
+          <p class="test-text">"Excelente atención. Los doctores nos explicaron todo con detalle y nos dieron recomendaciones prácticas para el cuidado dental en casa. Un centro de primer nivel en La Serena."</p>
+          <div class="test-author">
+            <div class="test-avatar">CR</div>
+            <div><div class="test-name">Carlos R.</div><div class="test-detail">Papá de Matías, 4 años</div></div>
+          </div>
+        </div>
+        <div class="test-card reveal">
+          <div class="test-stars">★★★★★</div>
+          <p class="test-text">"Llevé a mis dos hijos y la experiencia fue maravillosa. El lugar es hermoso, limpio y pensado para los niños. Me encanta que tienen fonoaudiología y pediatría en el mismo lugar."</p>
+          <div class="test-author">
+            <div class="test-avatar">LV</div>
+            <div><div class="test-name">Laura V.</div><div class="test-detail">Mamá de Diego y Emma</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Facility Gallery -->
+  <section class="facility" id="instalaciones">
+    <div class="container">
+      <div class="facility-header">
+        <div class="section-eyebrow reveal">Nuestras Instalaciones</div>
+        <h2 class="section-title reveal">Un espacio diseñado para los más pequeños</h2>
+        <p class="section-desc reveal" style="margin:0 auto">Cada detalle de nuestro centro fue pensado para que los niños se sientan seguros y los padres tranquilos.</p>
+      </div>
+      <div class="facility-grid reveal">
+        <div class="facility-item big">
+          <div class="ph ph-sky" style="aspect-ratio:3/4;">🏥<span>Foto fachada clínica</span></div>
+          <span class="facility-label">📍 Nuestra Clínica</span>
+        </div>
+        <div class="facility-item">
+          <div class="ph ph-navy" style="aspect-ratio:4/3;">🌙<span>Vista nocturna</span></div>
+          <span class="facility-label">🌙 Vista nocturna</span>
+        </div>
+        <div class="facility-item">
+          <div class="ph ph-teal" style="aspect-ratio:4/3;">🏠<span>Interior clínica</span></div>
+          <span class="facility-label">🏠 Interior</span>
+        </div>
+        <div class="facility-item">
+          <div class="ph ph-warm" style="aspect-ratio:4/3;">🦸<span>Equipo profesional</span></div>
+          <span class="facility-label">🦸 Nuestro SuperEquipo</span>
+        </div>
+        <div class="facility-item">
+          <div class="ph ph-teal" style="aspect-ratio:4/3;">😊<span>Sala de atención</span></div>
+          <span class="facility-label">🏠 Nuestra fachada</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Location -->
+  <section class="location" id="ubicacion">
+    <div class="container">
+      <div class="location-grid">
+        <div class="location-map reveal">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1693.8!2d-71.2536!3d-29.9085!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9691ca7!2sHuanhuali%20899%2C%20La%20Serena!5e0!3m2!1ses!2scl!4v1700000000" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+        <div class="reveal">
+          <div class="section-eyebrow">Encuéntranos</div>
+          <h2 class="section-title">Visítanos en La Serena</h2>
+          <p class="section-desc" style="margin-bottom:8px;">Estamos ubicados en un sector de fácil acceso, con estacionamiento disponible.</p>
+          <div class="location-details">
+            <div class="loc-item">
+              <div class="loc-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+              <div><h4>Dirección</h4><p>Huanhualí 899, La Serena<br>Región de Coquimbo, Chile</p></div>
+            </div>
+            <div class="loc-item">
+              <div class="loc-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="var(--teal)"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></div>
+              <div><h4>WhatsApp / Teléfono</h4><p><a href="https://wa.me/56964721463">+56 9 6472 1463</a></p></div>
+            </div>
+            <div class="loc-item">
+              <div class="loc-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></div>
+              <div><h4>Email</h4><p><a href="mailto:miprimeraclinica@gmail.com">miprimeraclinica@gmail.com</a></p></div>
+            </div>
+            <div class="loc-item">
+              <div class="loc-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="var(--teal)"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></div>
+              <div><h4>Instagram</h4><p><a href="https://instagram.com/tuprimerdentista" target="_blank">@tuprimerdentista</a></p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta">
+    <div class="container">
+      <div class="cta-inner reveal">
+        <h2>¿Listo para la primera visita de tu hijo?</h2>
+        <p>Agenda una consulta y dale a tu hijo el mejor comienzo en su cuidado de salud. Nuestro equipo los recibirá con la calidez y profesionalismo que merecen.</p>
+        <div class="cta-buttons">
+          <a href="https://wa.me/56964721463?text=Hola%2C%20quiero%20agendar%20una%20hora%20para%20mi%20hijo" class="btn-whatsapp">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Agendar por WhatsApp
+          </a>
+          <a href="tel:+56964721463" class="btn-outline">📞 Llamar Ahora</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="footer-logo-text">Mi Primera <span>Clínica</span></div>
+          <p>Centro de Salud Integral para Niños en La Serena. Cuidamos la salud de tus hijos con profesionalismo, calidez y dedicación desde el primer día.</p>
+          <div class="footer-social">
+            <a href="https://instagram.com/tuprimerdentista" target="_blank" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
+            <a href="https://wa.me/56964721463" aria-label="WhatsApp"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+            <a href="mailto:miprimeraclinica@gmail.com" aria-label="Email"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Especialidades</h4>
+          <ul>
+            <li><a href="#servicios">Odontopediatría</a></li>
+            <li><a href="#servicios">Fonoaudiología</a></li>
+            <li><a href="#servicios">Ortodoncia</a></li>
+            <li><a href="#servicios">Pediatría</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Centro</h4>
+          <ul>
+            <li><a href="#nosotros">Quiénes Somos</a></li>
+            <li><a href="#equipo">Nuestro Equipo</a></li>
+            <li><a href="#ubicacion">Ubicación</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contacto</h4>
+          <ul>
+            <li><a href="https://wa.me/56964721463">+56 9 6472 1463</a></li>
+            <li><a href="mailto:miprimeraclinica@gmail.com">miprimeraclinica@gmail.com</a></li>
+            <li><a href="#">Huanhualí 899, La Serena</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 Mi Primera Clínica. Todos los derechos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Navbar scroll
+    const nav = document.getElementById('navbar');
+    window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 30));
+
+    // Mobile menu
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+    mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileMenu.classList.remove('open')));
+
+    // Scroll reveal
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }});
+    }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        const t = document.querySelector(a.getAttribute('href'));
+        if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+  </script>
+</body>
+</html>
