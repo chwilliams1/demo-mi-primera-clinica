@@ -199,6 +199,7 @@
     }
     .hero-img-wrapper img { width: 100%; height: 100%; object-fit: cover; }
 
+    .hero-cards-row { position: static; }
     .hero-card {
       position: absolute; background: var(--white); border-radius: var(--radius-md);
       padding: 18px 22px; box-shadow: var(--shadow-lg);
@@ -484,10 +485,12 @@
 
     /* === Responsive === */
     @media (max-width: 1024px) {
+      .hero { overflow: visible; }
       .hero-grid { grid-template-columns: 1fr; gap: 48px; }
       .hero-visual { order: -1; max-width: 420px; margin: 0 auto; }
-      .hero-card.hc-1 { left: 0; bottom: 20px; }
-      .hero-card.hc-2 { right: 0; top: 20px; }
+      .hero-card { padding: 14px 16px; }
+      .hero-card.hc-1 { left: -10px; bottom: 20px; }
+      .hero-card.hc-2 { right: -10px; top: 20px; }
       .about-grid { grid-template-columns: 1fr; gap: 48px; }
       .services-grid { grid-template-columns: repeat(2, 1fr); }
       .team-main { grid-template-columns: repeat(3, 1fr); gap: 24px; }
@@ -499,16 +502,51 @@
       .nav-mobile { display: block; }
     }
     @media (max-width: 640px) {
+      .hero { padding: 110px 0 60px; }
+      .hero-grid { gap: 36px; }
+      .hero-visual { max-width: 100%; position: relative; }
+      .hero-img-wrapper { aspect-ratio: 4/3; }
+      .hero-card {
+        position: relative; top: auto !important; bottom: auto !important;
+        left: auto !important; right: auto !important;
+        animation: none; box-shadow: var(--shadow-md);
+        padding: 14px 18px; border-radius: var(--radius-sm);
+      }
+      .hero-card.hc-1, .hero-card.hc-2 {
+        position: relative;
+      }
+      .hero-visual {
+        display: flex; flex-direction: column; gap: 12px;
+      }
+      .hero-img-wrapper { border-radius: var(--radius-md); }
+      .hero-cards-row {
+        display: flex; gap: 12px;
+      }
+      .hero-card { flex: 1; }
+      .hc-icon { width: 40px; height: 40px; border-radius: 10px; font-size: 1.2rem; }
+      .hc-text strong { font-size: 0.82rem; }
+      .hc-text span { font-size: 0.7rem; }
+      .hero-desc { font-size: 1rem; }
+      .hero-actions { gap: 10px; }
+      .btn-primary, .btn-outline { padding: 14px 24px; font-size: 0.88rem; }
+      .hero-trust { gap: 20px; flex-wrap: wrap; justify-content: center; }
+      .hero-trust-item strong { font-size: 1.5rem; }
+      .hero-trust-item span { font-size: 0.75rem; }
       .services-grid { grid-template-columns: 1fr; }
       .team-main { grid-template-columns: 1fr 1fr; }
       .team-secondary { grid-template-columns: 1fr 1fr; }
-      .hero-trust { gap: 28px; flex-wrap: wrap; }
       .footer-grid { grid-template-columns: 1fr; }
       .facility-showcase { grid-template-columns: 1fr; }
       .facility-grid { grid-template-columns: 1fr 1fr; }
       .facility-item.big { grid-row: span 1; }
       .facility-item.big img { aspect-ratio: 16/10; }
       .trust-items { gap: 20px; }
+    }
+    @media (max-width: 380px) {
+      .hero-cards-row { flex-direction: column; }
+      .hero-actions { flex-direction: column; align-items: stretch; text-align: center; }
+      .btn-primary, .btn-outline { justify-content: center; padding: 14px 18px; font-size: 0.85rem; }
+      .hero-trust { justify-content: space-between; gap: 16px; }
     }
 
     /* === Mobile Menu === */
@@ -598,18 +636,20 @@
           <div class="hero-img-wrapper">
             <div class="ph ph-teal">🏥<span>Foto fachada clínica</span></div>
           </div>
-          <div class="hero-card hc-1">
-            <div class="hc-icon teal">😊</div>
-            <div class="hc-text">
-              <strong>Sin miedo al dentista</strong>
-              <span>Ambiente pensado para niños</span>
+          <div class="hero-cards-row">
+            <div class="hero-card hc-1">
+              <div class="hc-icon teal">😊</div>
+              <div class="hc-text">
+                <strong>Sin miedo al dentista</strong>
+                <span>Ambiente pensado para niños</span>
+              </div>
             </div>
-          </div>
-          <div class="hero-card hc-2">
-            <div class="hc-icon coral">🩺</div>
-            <div class="hc-text">
-              <strong>Atención integral</strong>
-              <span>Múltiples especialidades</span>
+            <div class="hero-card hc-2">
+              <div class="hc-icon coral">🩺</div>
+              <div class="hc-text">
+                <strong>Atención integral</strong>
+                <span>Múltiples especialidades</span>
+              </div>
             </div>
           </div>
         </div>
